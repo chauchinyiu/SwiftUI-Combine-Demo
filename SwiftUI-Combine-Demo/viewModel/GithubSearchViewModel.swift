@@ -25,7 +25,7 @@ final class GithubSearchViewModel: BindableObject {
             if(oldValue.isEmpty){
                 self.repositories = []
             }else{
-                print("typing :: " + self.query )
+                print("typing :: " + self.query)
                 //Implementation Of throttle machanism
                 self.searchTask?.cancel()
                 // Replace previous task with a new one
@@ -41,7 +41,6 @@ final class GithubSearchViewModel: BindableObject {
     }
 
     func search() {
-        
         client.search(query: query) { (result, error) in
             if(error != nil) {
                 print("error :" + error.debugDescription)

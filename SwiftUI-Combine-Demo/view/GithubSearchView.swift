@@ -19,7 +19,7 @@ struct GithubSearchView : View {
                 SearchBar(text: viewModel[\.query], viewModel: viewModel)
                 
                 List(viewModel.repositories) { repo in
-                    RepositoryRow(viewModel: self.viewModel, repository: repo)
+                    RepositoryRow( repository: repo)
                       
                 } 
             }
