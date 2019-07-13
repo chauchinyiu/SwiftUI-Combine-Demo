@@ -10,18 +10,23 @@ import SwiftUI
 import Combine
 
 final class GithubSearchViewModel: BindableObject {
+    
     let client = GithubServicesClient()
     var didChange = PassthroughSubject<GithubSearchViewModel, Never>()
+    var subscriber: AnyCancellable?
     var searchTask: DispatchWorkItem?
-    private(set) var repositories = [Repository]() {
-        didSet { didChange.send(self) }
+    var repositories = [Repository]() {
+        didSet {
+            DispatchQueue.main.async {
+                self.didChange.send(self)
+            }
+
+        }
     }
     
-    let baseUrl:String = "https://api.github.com/"
 
     var query = "" {
         didSet {
-            didChange.send(self)
             if(oldValue.isEmpty){
                 self.repositories = []
             }else{
@@ -40,14 +45,13 @@ final class GithubSearchViewModel: BindableObject {
         }
     }
 
-    func search() {
-        client.search(query: query) { (result, error) in
-            if(error != nil) {
-                print("error :" + error.debugDescription)
-            } else{
-                 self.repositories = result
-            }
-        }
+ 
+   func search() {
+         subscriber = client
+            .search(query: query)
+            .catch { _ in Just([]) }
+            .assign(to: \.repositories, on: self)
     }
+
  
 }

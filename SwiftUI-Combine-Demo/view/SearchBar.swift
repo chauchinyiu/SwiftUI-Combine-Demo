@@ -10,21 +10,14 @@ import SwiftUI
 
 struct SearchBar : View {
     @Binding var text: String
-    
-    var viewModel: GithubSearchViewModel
     var body: some View {
         ZStack {
-            Color.gray
-            HStack {
            
+            HStack {
                 TextField($text)
                .padding([.leading, .trailing, .top, .bottom], 8)
-                    .background(Color.white.opacity(0.4))
-                    .foregroundColor(Color.white)
+                     .background(Color.white.opacity(0.2))
                     .cornerRadius(8)
-
-       
-                
             }
             .padding([.leading, .trailing], 16)
             

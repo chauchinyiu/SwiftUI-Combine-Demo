@@ -12,15 +12,21 @@ import Combine
 import Foundation
 
 class GithubServicesClient {
-    let baseUrl:String = "https://api.github.com/"
+   
     
-    func search(query: String,  completion: @escaping (_ result: [Repository], _ error: Error?) -> Void) {
-        guard !query.isEmpty else {
-            completion([],nil)
-            return
-        }
-        
-        var urlComponents = URLComponents(string: self.baseUrl + "search/repositories")!
+    func search(query: String) -> AnyPublisher<[Repository], Error> {
+        guard let url = url(query)
+            else { preconditionFailure("Can't create url for query: \(query)") }
+        let decoder = JSONDecoder()
+        return URLSession.shared.dataTaskPublisher(for: url)
+            .map { $0.data }
+            .decode(type: SearchRepositoryResponse.self, decoder: decoder)
+            .map { $0.items }
+            .eraseToAnyPublisher()
+    }
+
+    private func url(_ query : String) -> URL? {
+        var urlComponents = URLComponents(string: "https://api.github.com/search/repositories")
         
         var queryItems: [URLQueryItem] {
             return [
@@ -28,29 +34,7 @@ class GithubServicesClient {
                 .init(name: "order", value: "desc")
             ]
         }
-        urlComponents.queryItems = queryItems;
-        var request = URLRequest(url: urlComponents.url!)
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else {
-                   completion([],error)
-                return
-            }
-            
-            DispatchQueue.main.async {
-                do {
-                    let decoder = JSONDecoder()
-                    let response = try decoder.decode(SearchRepositoryResponse.self, from: data)
-                    completion(response.items,nil)
-                } catch let err {
-                    completion([],err)
-                    print(err)
-                }
-            }
-        }
-        task.resume();
+        urlComponents?.queryItems = queryItems;
+        return urlComponents?.url
     }
-
 }

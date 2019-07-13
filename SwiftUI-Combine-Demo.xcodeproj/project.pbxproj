@@ -115,10 +115,10 @@
 		1F8C613022D1FE1D004477E0 /* SwiftUI-Combine-Demo */ = {
 			isa = PBXGroup;
 			children = (
-				1F92345522D3DFB4009BE9C1 /* services */,
 				1F8C616522D21C2C004477E0 /* view */,
 				1F8C616822D21CEA004477E0 /* viewModel */,
 				1F8C616922D2226D004477E0 /* model */,
+				1F92345522D3DFB4009BE9C1 /* services */,
 				1F8C613122D1FE1D004477E0 /* AppDelegate.swift */,
 				1F8C613322D1FE1D004477E0 /* SceneDelegate.swift */,
 				1F8C613722D1FE1E004477E0 /* Assets.xcassets */,
