@@ -9,21 +9,12 @@
 import SwiftUI
 import Combine
 
-final class GithubSearchViewModel: BindableObject {
+final class GithubSearchViewModel: ObservableObject {
     
     let client = GithubServicesClient()
-    var didChange = PassthroughSubject<GithubSearchViewModel, Never>()
     var subscriber: AnyCancellable?
     var searchTask: DispatchWorkItem?
-    var repositories = [Repository]() {
-        didSet {
-            DispatchQueue.main.async {
-                self.didChange.send(self)
-            }
-
-        }
-    }
-    
+    @Published  var repositories = [Repository]()
 
     var query = "" {
         didSet {

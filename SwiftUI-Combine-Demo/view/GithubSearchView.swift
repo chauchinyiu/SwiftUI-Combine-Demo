@@ -10,13 +10,13 @@ import SwiftUI
 import Combine
 
 struct GithubSearchView : View {
-    @ObjectBinding var viewModel = GithubSearchViewModel()
+    @ObservedObject var viewModel = GithubSearchViewModel()
     
      var body: some View {
-        NavigationView {
+     NavigationView {
             VStack {
-                SearchBar(text: viewModel[\.query])
-                List(viewModel.repositories) { repo in
+                SearchBar(text: $viewModel.query)
+                List(viewModel.repositories){ repo in
                     RepositoryRow( repository: repo)
                 } 
             }

@@ -14,7 +14,7 @@ struct SearchBar : View {
         ZStack {
            
             HStack {
-                TextField($text)
+                TextField("Searching : ", text:$text)
                .padding([.leading, .trailing, .top, .bottom], 8)
                      .background(Color.white.opacity(0.2))
                     .cornerRadius(8)

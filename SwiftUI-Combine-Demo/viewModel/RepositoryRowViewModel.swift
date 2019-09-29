@@ -9,13 +9,9 @@
 import SwiftUI
 import Combine
 
-final class RepositoryRowViewModel: BindableObject{
-
-    var didChange = PassthroughSubject<RepositoryRowViewModel, Never>()
+final class RepositoryRowViewModel: ObservableObject{
     
-    private(set) var image = UIImage(named: "placeholder") {
-        didSet { didChange.send(self) }
-    }
+   @Published private(set) var image = UIImage(named: "placeholder")
     
     func lazyLoadImage(url : URL){
         URLSession.shared.dataTask( with: url, completionHandler: { (data, _, _) -> Void in

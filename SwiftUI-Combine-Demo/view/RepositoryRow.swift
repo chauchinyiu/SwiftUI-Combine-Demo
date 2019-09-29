@@ -11,7 +11,7 @@ import UIKit
 import Combine
 
 struct RepositoryRow : View {
-    @ObjectBinding var viewModel: RepositoryRowViewModel = RepositoryRowViewModel()
+    @ObservedObject var viewModel: RepositoryRowViewModel = RepositoryRowViewModel()
     @State var repository: Repository
 
    let fontsize: CGFloat = 18
@@ -22,7 +22,7 @@ struct RepositoryRow : View {
            setImage()
                 .resizable()
                 .renderingMode(.original)
-                .animation(.basic())
+                .animation(.default)
                 .aspectRatio(contentMode: .fit)
                 .frame(width: imagesize, height: imagesize)
  
@@ -31,9 +31,9 @@ struct RepositoryRow : View {
                 
             
             Spacer()
-        }.tapAction({
+        }.onTapGesture {
             UIApplication.shared.open(self.repository.html_url, options:  [:], completionHandler: nil)
-        }).frame(height: 60)
+        }.frame(width:200, height: 60, alignment: .center)
     }
  
 // Part 1: Synchronously loading image
