@@ -9,8 +9,8 @@
 import SwiftUI
 import Combine
 
-struct GithubSearchView : View {
-    @ObservedObject var viewModel = GithubSearchViewModel()
+struct SearchRepositoriesView : View {
+    @ObservedObject var viewModel = SearchRepositoriesViewModel()
     
     var body: some View {
         NavigationView {
@@ -19,7 +19,7 @@ struct GithubSearchView : View {
                 List(viewModel.repositories){ repo in
                     
                     //open WebView in the app
-                    NavigationLink(destination: WebView(request: URLRequest(url: repo.html_url))) {
+                    NavigationLink(destination:WebView(request:URLRequest(url: repo.html_url))) {
                         RepositoryRow( repository: repo)
                     }
                     
@@ -41,8 +41,8 @@ struct GithubSearchView_Previews: PreviewProvider {
         mockSearchView()
     }
     
-    static func mockSearchView() -> GithubSearchView {
-        let searchView = GithubSearchView()
+    static func mockSearchView() -> SearchRepositoriesView {
+        let searchView = SearchRepositoriesView()
         searchView.viewModel.query = "swift"
         let repos = [ Repository(id: Int64(UUID().hashValue), full_name: "test 1", description: "test description", stargazers_count: 4, language:"swift", owner: User(id: Int64(UUID().hashValue), login: "test", avatar_url: URL(string: "https://avatars3.githubusercontent.com/u/324574?v=4")!), html_url: URL(string: "https://github.com/openstack")!),
                       Repository(id: Int64(UUID().hashValue), full_name: "test 2", description: "test description", stargazers_count: 4, language: "swift", owner: User(id: Int64(UUID().hashValue), login: "test", avatar_url: URL(string: "https://avatars3.githubusercontent.com/u/324574?v=4")!), html_url: URL(string: "https://github.com/openstack")!),

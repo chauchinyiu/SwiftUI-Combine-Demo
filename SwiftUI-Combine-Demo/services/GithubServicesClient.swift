@@ -12,9 +12,8 @@ import Combine
 import Foundation
 
 class GithubServicesClient {
-   
     
-    func search(query: String) -> AnyPublisher<[Repository], Error> {
+    func request(query: String) -> AnyPublisher<[Repository], Error> {
         guard let url = url(query)
             else { preconditionFailure("Can't create url for query: \(query)") }
         let decoder = JSONDecoder()
