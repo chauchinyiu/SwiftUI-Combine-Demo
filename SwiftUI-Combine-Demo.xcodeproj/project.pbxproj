@@ -23,6 +23,7 @@
 		1F8C616F22D222A6004477E0 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8C616C22D222A6004477E0 /* Repository.swift */; };
 		1F8C617122D222D1004477E0 /* GithubServicesClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F8C617022D222D1004477E0 /* GithubServicesClient.swift */; };
 		1F92345422D3C997009BE9C1 /* RepositoryRowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F92345322D3C997009BE9C1 /* RepositoryRowViewModel.swift */; };
+		1F96F67C2354EA02003CA209 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F96F67B2354EA02003CA209 /* WebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		1F8C616C22D222A6004477E0 /* Repository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
 		1F8C617022D222D1004477E0 /* GithubServicesClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GithubServicesClient.swift; sourceTree = "<group>"; };
 		1F92345322D3C997009BE9C1 /* RepositoryRowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryRowViewModel.swift; sourceTree = "<group>"; };
+		1F96F67B2354EA02003CA209 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 				1F8C616122D1FE83004477E0 /* GithubSearchView.swift */,
 				1F8C616322D21405004477E0 /* RepositoryRow.swift */,
 				1F0144CC22D231C000930323 /* SearchBar.swift */,
+				1F96F67B2354EA02003CA209 /* WebView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -332,6 +335,7 @@
 				1F8C616722D21CC8004477E0 /* GithubSearchViewModel.swift in Sources */,
 				1F8C616422D21405004477E0 /* RepositoryRow.swift in Sources */,
 				1F0144CD22D231C000930323 /* SearchBar.swift in Sources */,
+				1F96F67C2354EA02003CA209 /* WebView.swift in Sources */,
 				1F8C613422D1FE1D004477E0 /* SceneDelegate.swift in Sources */,
 				1F8C616E22D222A6004477E0 /* User.swift in Sources */,
 			);

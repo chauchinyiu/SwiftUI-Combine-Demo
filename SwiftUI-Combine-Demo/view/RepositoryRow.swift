@@ -31,8 +31,6 @@ struct RepositoryRow : View {
                 
             
             Spacer()
-        }.onTapGesture {
-            UIApplication.shared.open(self.repository.html_url, options:  [:], completionHandler: nil)
         }.frame(width:200, height: 60, alignment: .center)
     }
  
