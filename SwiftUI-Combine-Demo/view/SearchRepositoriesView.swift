@@ -15,7 +15,10 @@ struct SearchRepositoriesView : View {
     var body: some View {
         NavigationView {
             VStack {
-                SearchBar(text: $viewModel.query)
+                SearchBar(text: $viewModel.query){
+                    print("enter tapped !!!!")
+                    self.viewModel.search()
+                }
                 List(viewModel.repositories){ repo in
                     
                     //open WebView in the app

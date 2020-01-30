@@ -10,11 +10,18 @@ import SwiftUI
 
 struct SearchBar : View {
     @Binding var text: String
+    var enterHandler: () -> Void = {}
+    
+    init(text: Binding<String>, enterHandler: @escaping () -> Void = {}){
+        self._text = text
+        self.enterHandler = enterHandler
+    }
+    
     var body: some View {
         ZStack {
            
             HStack {
-                TextField("Searching : ", text:$text)
+                TextField("Searching : ", text:$text, onCommit: self.enterHandler)
                .padding([.leading, .trailing, .top, .bottom], 8)
                      .background(Color.white.opacity(0.2))
                     .cornerRadius(8)

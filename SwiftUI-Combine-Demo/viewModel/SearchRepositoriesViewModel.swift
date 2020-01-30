@@ -6,34 +6,50 @@
 //  Copyright © 2019 Chinyiu Chau. All rights reserved.
 //
 
- 
+
 import Combine
 import SwiftUI
 final class SearchRepositoriesViewModel: ObservableObject {
     
     let client = GithubServicesClient()
     var subscriber: AnyCancellable?
- 
-    @Published  var repositories = [Repository]()
-
-    @Published  var query = "" {
+    var cancellables = Set<AnyCancellable>()
+    let q = DispatchQueue.main //DispatchQueue(label: "debounce-queue")
+    var requestingQuery = ""
+    @Published var repositories = [Repository]() {
         didSet {
-            self.search()
+            requestingQuery = ""
+        }
+    }
+    @Published var query = "" {
+        didSet {
             print(query)
         }
     }
-
-   func search() {
-    _ = AnyCancellable( $query
-           .removeDuplicates()
-           .debounce(for: 1, scheduler: DispatchQueue.main)
-           .sink(receiveValue: { query in
-            self.subscriber = self.client.request(query: query)
-                   .catch { _ in Just([]) }
-                   .assign(to: \.repositories, on: self)
-           }))
- 
+    // set up debounce for query string and publish the results of repositiories
+    init() {
+        _ = AnyCancellable( $query
+            .debounce(for: 0.5, scheduler: DispatchQueue.main)
+            .sink(receiveValue: { query in
+                guard !query.isEmpty else {
+                    self.repositories = []
+                    return
+                }
+               self.search()
+            })).store(in: &cancellables)
     }
-
- 
+   
+    func search() {
+        
+        guard requestingQuery != query else {
+            return
+        }
+        print("Searching keyword: ", query)
+        self.subscriber = self.client.request(query: query)
+             .removeDuplicates()
+             .catch { _ in Just([]) }
+             .assign(to: \.repositories, on: self)
+        requestingQuery = query
+    }
 }
+
