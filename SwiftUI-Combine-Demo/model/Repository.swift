@@ -9,7 +9,7 @@
 import Foundation
 import SwiftUI
 
-struct Repository: Decodable, Hashable, Identifiable {
+struct Repository: Decodable, Identifiable {
     var id: Int64
     var full_name: String
     var description: String?

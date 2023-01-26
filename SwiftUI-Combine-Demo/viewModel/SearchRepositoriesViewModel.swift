@@ -1,5 +1,5 @@
 //
-//  GithubSearchViewModel.swift
+//  SearchRepositoriesViewModel.swift
 //  SwiftUI-Combine-Demo
 //
 //  Created by Chinyiu Chau on 07.07.19.
@@ -28,7 +28,7 @@ final class SearchRepositoriesViewModel: ObservableObject {
     }
     // set up debounce for query string and publish the results of repositiories
     init() {
-        _ = AnyCancellable( $query
+        AnyCancellable( $query
             .debounce(for: 0.5, scheduler: DispatchQueue.main)
             .sink(receiveValue: { query in
                 guard !query.isEmpty else {
@@ -46,7 +46,6 @@ final class SearchRepositoriesViewModel: ObservableObject {
         }
         print("Searching keyword: ", query)
         self.subscriber = self.client.request(query: query)
-             .removeDuplicates()
              .catch { _ in Just([]) }
              .assign(to: \.repositories, on: self)
         requestingQuery = query

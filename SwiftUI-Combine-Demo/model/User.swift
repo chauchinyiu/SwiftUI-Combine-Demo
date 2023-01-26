@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct User: Decodable, Hashable, Identifiable {
+struct User: Decodable {
     var id: Int64
     var login: String
     var avatar_url: URL
