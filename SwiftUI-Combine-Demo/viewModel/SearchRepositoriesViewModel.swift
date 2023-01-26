@@ -9,12 +9,13 @@
 
 import Combine
 import SwiftUI
-final class SearchRepositoriesViewModel: ObservableObject {
+//@MainActor, make sure the value being published will be in main thread
+@MainActor class SearchRepositoriesViewModel: ObservableObject {
     
     let client = GithubServicesClient()
     var subscriber: AnyCancellable?
     var cancellables = Set<AnyCancellable>()
-    let q = DispatchQueue.main //DispatchQueue(label: "debounce-queue")
+   
     var requestingQuery = ""
     @Published var repositories = [Repository]() {
         didSet {
@@ -35,11 +36,16 @@ final class SearchRepositoriesViewModel: ObservableObject {
                     self.repositories = []
                     return
                 }
-               self.search()
+              Task {
+                  await self.searchAwait()
+              }
+            
+         
             })).store(in: &cancellables)
+   
     }
    
-    func search() {
+      func search() {
         
         guard requestingQuery != query else {
             return
@@ -48,7 +54,25 @@ final class SearchRepositoriesViewModel: ObservableObject {
         self.subscriber = self.client.request(query: query)
              .catch { _ in Just([]) }
              .assign(to: \.repositories, on: self)
+             
         requestingQuery = query
     }
+    
+    func searchAwait() async   {
+        guard requestingQuery != query else {
+            return
+        }
+        print("Searching keyword async ", query)
+        requestingQuery = query
+        do {
+            self.repositories = try await self.client.request(query: query)
+        } catch {
+            print("failed to search repository")
+        }
+    }
 }
+    
+    
+
+
 

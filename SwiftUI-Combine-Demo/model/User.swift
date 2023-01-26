@@ -6,7 +6,6 @@
 //  Copyright © 2019 Chinyiu Chau. All rights reserved.
 //
 import Foundation
-import SwiftUI
 
 struct User: Decodable {
     var id: Int64

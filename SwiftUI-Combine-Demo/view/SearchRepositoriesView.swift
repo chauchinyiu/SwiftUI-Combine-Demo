@@ -17,7 +17,11 @@ struct SearchRepositoriesView : View {
             VStack {
                 SearchBar(text: $viewModel.query){
                     print("enter tapped !!!!")
-                    self.viewModel.search()
+//                    self.viewModel.search()
+                    
+                    Task {
+                        await self.viewModel.searchAwait()
+                    }
                 }
                 List(viewModel.repositories){ repo in
                     

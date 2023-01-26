@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 struct Repository: Decodable, Identifiable {
     var id: Int64
@@ -17,6 +16,5 @@ struct Repository: Decodable, Identifiable {
     var language: String?
     var owner: User
     var html_url: URL
-}
 
- 
+}

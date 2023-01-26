@@ -27,6 +27,15 @@ class GithubServicesClient {
         
     }
     
+    //async implementation
+    func request(query: String) async throws  -> [Repository] {
+        guard let url = url(query)
+            else { preconditionFailure("Can't create url for query: \(query)") }
+        let (data, _) = try await URLSession.shared.data(from: url)
+        return try JSONDecoder().decode(SearchRepositoryResponse.self, from: data).items
+    }
+ 
+    
     private func url(_ query : String) -> URL? {
         var urlComponents = URLComponents(string: "https://api.github.com/search/repositories")
         
